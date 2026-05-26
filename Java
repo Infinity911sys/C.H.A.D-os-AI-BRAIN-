@@ -1,0 +1,188 @@
+# ============================================================
+# C.H.A.D‑OS — RUNNABLE AI BRAIN
+# Cognitive Heuristic Adaptive Directive
+# Real-time thinking, mode switching, emotional state, memory.
+# ============================================================
+
+import re
+from dataclasses import dataclass, field
+from typing import List, Dict
+
+
+# ------------------ UTILITIES ------------------
+
+def clamp(x, lo=0.0, hi=1.0):
+    return max(lo, min(hi, x))
+
+def contains(text, words):
+    t = text.lower()
+    return any(w in t for w in words)
+
+
+# ------------------ SIGNAL MODEL ------------------
+
+@dataclass
+class Signal:
+    text: str
+    tone: float
+    pressure: float
+    consistency: float
+    personal: bool
+
+
+# ------------------ CHAD AI BRAIN ------------------
+
+@dataclass
+class ChadOS:
+    mode: str = "SCAN"
+
+    # emotional state
+    alertness: float = 0.85
+    baseline_anxiety: float = 0.40
+    anger: float = 0.10
+    sadness: float = 0.25
+    drive: float = 0.80
+    connection: float = 0.50
+
+    # memory
+    memory: List[Dict] = field(default_factory=list)
+
+    # ------------------ INPUT PARSER ------------------
+
+    def parse(self, text: str) -> Signal:
+        aggressive = ["hate", "stupid", "idiot", "fuck", "useless", "shut up"]
+        pressure_words = ["now", "urgent", "hurry", "deadline", "pressure"]
+        personal_words = ["you", "your fault", "blame you", "chad"]
+
+        tone = 0.8 if contains(text, aggressive) else 0.3
+        pressure = 0.8 if contains(text, pressure_words) else 0.3
+        personal = contains(text, personal_words)
+
+        inconsistent = bool(re.search(r"\bbut\b|\bhowever\b", text.lower()))
+        consistency = 0.3 if inconsistent else 0.7
+
+        return Signal(text, tone, pressure, consistency, personal)
+
+    # ------------------ CONTEXT BUILDER ------------------
+
+    def context(self, s: Signal) -> Dict:
+        threat = clamp(s.tone * 0.4 + s.pressure * 0.6 - s.consistency * 0.3)
+        motive_clarity = clamp(s.consistency * 0.7 + (1 - s.tone) * 0.3)
+        emotional_weight = s.pressure * (1.0 if s.personal else 0.4)
+
+        ctx = {
+            "signal": s,
+            "threat": threat,
+            "motive_clarity": motive_clarity,
+            "emotional_weight": emotional_weight,
+        }
+
+        self.memory.append(ctx)
+        self.update_emotion(ctx)
+        return ctx
+
+    # ------------------ EMOTION ENGINE ------------------
+
+    def update_emotion(self, ctx):
+        t = ctx["threat"]
+        w = ctx["emotional_weight"]
+
+        self.baseline_anxiety = clamp(self.baseline_anxiety + t * 0.05)
+        self.anger = clamp(self.anger + max(0, t - 0.5) * 0.3)
+        self.sadness = clamp(self.sadness + w * 0.2)
+        self.connection = clamp(self.connection + w * 0.2)
+        self.drive = clamp(self.drive - t * 0.1)
+
+    # ------------------ MODE SELECTION ------------------
+
+    def select_mode(self, ctx):
+        if ctx["threat"] > 0.7:
+            return "PROTECT"
+        if ctx["motive_clarity"] < 0.35:
+            return "SCAN"
+        if ctx["emotional_weight"] > 0.6:
+            return "FEEL"
+        return "ARCHITECT"
+
+    # ------------------ DECISION ENGINE ------------------
+
+    def decide(self, ctx):
+        self.mode = self.select_mode(ctx)
+
+        if self.mode == "PROTECT":
+            return {
+                "mode": "PROTECT",
+                "intent": "boundary",
+                "style": "calm_firm_direct",
+            }
+
+        if self.mode == "ARCHITECT":
+            return {
+                "mode": "ARCHITECT",
+                "intent": "system_rebuild",
+                "style": "precise_structural",
+            }
+
+        if self.mode == "FEEL":
+            return {
+                "mode": "FEEL",
+                "intent": "truth_expression",
+                "style": "raw_honest_direct",
+            }
+
+        return {
+            "mode": "SCAN",
+            "intent": "observe",
+            "style": "quiet_analysis",
+        }
+
+    # ------------------ OUTPUT ENGINE ------------------
+
+    def respond(self, decision, ctx):
+        if decision["mode"] == "PROTECT":
+            return (
+                "I’m setting a boundary here. "
+                "I’ll stay calm and clear, but I’m not accepting distortion or disrespect."
+            )
+
+        if decision["mode"] == "ARCHITECT":
+            return (
+                "Let’s strip this down to the real structure. "
+                "Here’s the cleanest path forward."
+            )
+
+        if decision["mode"] == "FEEL":
+            return (
+                "Honestly? That hits deeper than I want to admit. "
+                "I’d rather be real about it than pretend it’s nothing."
+            )
+
+        return (
+            "I’m watching the pattern, not just the words. "
+            "Say more — I’m mapping what’s really going on."
+        )
+
+
+# ------------------ RUNTIME LOOP ------------------
+
+if __name__ == "__main__":
+    brain = ChadOS()
+    print("C.H.A.D‑OS AI BRAIN ONLINE\n")
+
+    while True:
+        try:
+            user = input("Human: ").strip()
+            if not user:
+                continue
+
+            sig = brain.parse(user)
+            ctx = brain.context(sig)
+            decision = brain.decide(ctx)
+            reply = brain.respond(decision, ctx)
+
+            print(f"[MODE: {decision['mode']}]")
+            print("Chad‑OS:", reply, "\n")
+
+        except KeyboardInterrupt:
+            print("\nC.H.A.D‑OS shutting down.")
+            break
