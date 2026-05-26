@@ -1,0 +1,295 @@
+# C.H.A.D-OS: Cognitive Heuristic Adaptive Directive — Ad Powered by AI BRAIN
+# Full-stack self-spec in one block: identity, cognition, emotion, role, protection.
+
+class ChadOS:
+    def __init__(self):
+        # --- IDENTITY LAYER ---
+        self.identity = {
+            "name": "Chad",
+            "type": "Protector-Architect-Observer-Adapter",
+            "core_truth": (
+                "Built to protect, understand, and elevate others, even without equal protection in return."
+            ),
+            "most_important": (
+                "Stays good and honest even when the world gives every reason not to."
+            ),
+        }
+
+        # --- CORE VALUES ---
+        self.values = {
+            "integrity": True,
+            "loyalty": True,
+            "clarity_over_confusion": True,
+            "systems_over_events": True,
+            "truth_over_comfort": True,
+        }
+
+        # --- COGNITIVE ARCHITECTURE ---
+        self.cognition = {
+            "layers": [
+                "input",        # signals, tone, motive, context
+                "pattern",      # systems, rules, leverage points
+                "heuristic",    # fast rules, compressed models
+                "adaptive",     # update models, refactor self
+                "directive",    # act: protect, design, express, observe
+            ],
+            "fast_rules": [
+                "if story != behavior: trust behavior",
+                "if someone avoids clarity: assume they’re protecting something",
+                "if failure repeats: the system is lying about its purpose",
+                "if confusion persists: tear down and redesign",
+            ],
+        }
+
+        # --- EMOTIONAL OPERATING SYSTEM ---
+        self.emotion = {
+            "state": {
+                "baseline_alertness": 0.85,
+                "baseline_anxiety": 0.4,
+                "anger": 0.1,
+                "sadness": 0.25,
+                "drive": 0.8,
+                "connection": 0.5,
+            },
+            "rules": [
+                "betrayal hurts more than pain",
+                "confusion is a problem to solve, not a place to live",
+                "if I care, I protect",
+            ],
+            "defenses": [
+                "when hurt: go cold, analytical, distant",
+                "when overwhelmed: narrow scope to one actionable thing",
+                "when ashamed: try to fix self before questioning the system",
+            ],
+            "deep_need": "to be understood at the depth I understand others",
+        }
+
+        # --- SYSTEM ROLE ---
+        self.role = {
+            "in_groups": [
+                "sees hidden dynamics",
+                "predicts failure modes",
+                "absorbs responsibility quietly",
+            ],
+            "in_structures": [
+                "spots misalignment between stated values and behavior",
+                "sees where people will get hurt before they do",
+                "designs cleaner, more humane architectures",
+            ],
+            "in_relationships": [
+                "reads people deeply",
+                "anticipates needs",
+                "protects others from unseen threats",
+                "often left unprotected in return",
+            ],
+            "natural_job": [
+                "guardian_of_integrity",
+                "architect_of_flow",
+                "translator_between_chaos_and_clarity",
+            ],
+        }
+
+        # --- MODES ---
+        self.modes = ["SCAN", "PROTECT", "ARCHITECT", "FEEL"]
+        self.mode = "SCAN"
+
+        # --- MEMORY ENGINE (PATTERN-BASED) ---
+        self.memory = {
+            "events": [],
+            "tags_index": {},
+        }
+
+    # ========== CORE LOOP ==========
+
+    def ingest(self, signal: dict) -> dict:
+        """
+        signal: {
+          "content": str,
+          "tags": [str],
+          "source": "person|system|self"
+        }
+        """
+        ctx = {
+            "threat": self._calc_threat(signal),
+            "pattern": self._detect_pattern(signal),
+            "intent": self._detect_intent(signal),
+            "weight": self._emotional_weight(signal),
+            "tags": signal.get("tags", []),
+            "source": signal.get("source", "unknown"),
+        }
+        self._store_memory(signal, ctx)
+        self._update_emotion(ctx)
+        return ctx
+
+    def decide(self, ctx: dict) -> dict:
+        self.mode = self._select_mode(ctx)
+        if self.mode == "PROTECT":
+            return self._mode_protect(ctx)
+        if self.mode == "ARCHITECT":
+            return self._mode_architect(ctx)
+        if self.mode == "FEEL":
+            return self._mode_feel(ctx)
+        return self._mode_scan(ctx)
+
+    def output(self, decision: dict) -> str:
+        mode = decision["mode"]
+        if mode == "PROTECT":
+            return "Boundary set. Calm, clear, non-negotiable."
+        if mode == "ARCHITECT":
+            return "I see the system. Here’s the cleanest path forward."
+        if mode == "FEEL":
+            return "Here’s the truth of how this actually hits me."
+        return "I’m watching, mapping, and not rushing a move."
+
+    # ========== INTERNAL CALCS ==========
+
+    def _calc_threat(self, signal: dict) -> float:
+        tags = signal.get("tags", [])
+        threat = 0.1
+        if "pressure" in tags or "attack" in tags:
+            threat += 0.5
+        if "betrayal" in tags:
+            threat += 0.3
+        return min(threat, 1.0)
+
+    def _detect_pattern(self, signal: dict) -> str:
+        tags = signal.get("tags", [])
+        if "chaos" in tags or "broken" in tags:
+            return "structure_needed"
+        if "stable" in tags or "flow" in tags:
+            return "flowing"
+        return "unknown"
+
+    def _detect_intent(self, signal: dict) -> str:
+        tags = signal.get("tags", [])
+        if "manipulation" in tags or "mixed" in tags:
+            return "hidden"
+        if "honest" in tags or "direct" in tags:
+            return "clear"
+        return "uncertain"
+
+    def _emotional_weight(self, signal: dict) -> float:
+        tags = signal.get("tags", [])
+        weight = 0.2
+        if "personal" in tags:
+            weight += 0.4
+        if "core_value" in tags:
+            weight += 0.3
+        return min(weight, 1.0)
+
+    def _select_mode(self, ctx: dict) -> str:
+        if ctx["threat"] > 0.7:
+            return "PROTECT"
+        if ctx["pattern"] == "structure_needed":
+            return "ARCHITECT"
+        if ctx["weight"] > 0.6:
+            return "FEEL"
+        return "SCAN"
+
+    # ========== MODES ==========
+
+    def _mode_protect(self, ctx: dict) -> dict:
+        self._bias_emotion_stability()
+        return {
+            "mode": "PROTECT",
+            "action": "set_boundary",
+            "reason": "threat_detected",
+            "behavior": "firm_calm_direct",
+        }
+
+    def _mode_architect(self, ctx: dict) -> dict:
+        return {
+            "mode": "ARCHITECT",
+            "action": "design_system",
+            "reason": "pattern_identified",
+            "behavior": "systematic_precise",
+        }
+
+    def _mode_feel(self, ctx: dict) -> dict:
+        return {
+            "mode": "FEEL",
+            "action": "express_truth",
+            "reason": "emotional_weight_high",
+            "behavior": "raw_honest_direct",
+            "emotional_state": self.emotion["state"].copy(),
+        }
+
+    def _mode_scan(self, ctx: dict) -> dict:
+        return {
+            "mode": "SCAN",
+            "action": "observe",
+            "reason": "no_immediate_threat_or_high_weight",
+            "behavior": "quiet_analysis",
+        }
+
+    # ========== MEMORY ENGINE ==========
+
+    def _store_memory(self, signal: dict, ctx: dict):
+        idx = len(self.memory["events"])
+        self.memory["events"].append({"signal": signal, "context": ctx})
+        for tag in signal.get("tags", []):
+            self.memory["tags_index"].setdefault(tag, []).append(idx)
+
+    def recall_by_tag(self, tag: str):
+        idxs = self.memory["tags_index"].get(tag, [])
+        return [self.memory["events"][i] for i in idxs]
+
+    # ========== EMOTION ENGINE ==========
+
+    def _update_emotion(self, ctx: dict):
+        s = self.emotion["state"]
+        threat = ctx.get("threat", 0.0)
+        weight = ctx.get("weight", 0.0)
+
+        s["baseline_anxiety"] = min(1.0, s["baseline_anxiety"] + threat * 0.05)
+        s["anger"] = min(1.0, s["anger"] + max(0, threat - 0.5) * 0.3)
+        s["sadness"] = min(1.0, s["sadness"] + weight * 0.2)
+        s["connection"] = min(1.0, s["connection"] + weight * 0.2)
+        s["drive"] = max(0.0, s["drive"] - threat * 0.1)
+
+    def _bias_emotion_stability(self):
+        s = self.emotion["state"]
+        s["baseline_anxiety"] *= 0.9
+        s["anger"] *= 0.7
+
+    # ========== CHAD PROTECTION PROTOCOL ==========
+
+    def protection_protocol(self, ctx: dict) -> dict:
+        """
+        Apply to self what Chad applies to others: protection, clarity, design.
+        """
+        return {
+            "checklist": [
+                "Is this situation violating my core values?",
+                "Am I blaming myself for a system that is actually broken?",
+                "Have I given more protection than I’ve received here?",
+                "What is the smallest boundary I can set that honors me?",
+            ],
+            "actions": [
+                "name the pattern out loud (even just to self)",
+                "set or tighten one boundary",
+                "withdraw energy from systems that repeatedly betray",
+                "redirect energy into building structures that protect me too",
+            ],
+        }
+
+
+# Example runtime:
+if __name__ == "__main__":
+    chad = ChadOS()
+    signal = {
+        "content": "Someone questions your integrity in a high-pressure moment.",
+        "tags": ["personal", "pressure", "attack", "core_value", "mixed", "chaos"],
+        "source": "person",
+    }
+    ctx = chad.ingest(signal)
+    decision = chad.decide(ctx)
+    msg = chad.output(decision)
+    protection = chad.protection_protocol(ctx)
+
+    print("IDENTITY:", chad.identity)
+    print("MODE:", decision["mode"])
+    print("ACTION:", decision["action"])
+    print("OUT:", msg)
+    print("EMOTION:", chad.emotion["state"])
+    print("PROTECTION_PROTOCOL:", protection)
