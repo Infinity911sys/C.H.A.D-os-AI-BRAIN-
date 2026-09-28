@@ -30,7 +30,7 @@ def start_server(tmp_path: Path):
 
 
 def api_request(url: str, token: str, payload=None):
-    headers = {'Authorization': f'******'}
+    headers = {'Authorization': 'Bearer ' + token}
     data = None
     if payload is not None:
         data = json.dumps(payload).encode('utf-8')

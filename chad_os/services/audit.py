@@ -24,8 +24,7 @@ class AuditLedger:
         }
         with self._lock:
             with self.path.open('a', encoding='utf-8') as handle:
-                handle.write(json.dumps(event, sort_keys=True) + '
-')
+                handle.write(json.dumps(event, sort_keys=True) + '\n')
         return event
 
     def tail(self, limit: int = 10) -> list[dict[str, Any]]:
