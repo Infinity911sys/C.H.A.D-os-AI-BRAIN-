@@ -1,0 +1,262 @@
+{
+  "metadata": {
+    "description": "Phase 1 operational contracts for the ten platform-core systems.",
+    "owner": "Austin Enterprise LLC"
+  },
+  "systems": [
+    {
+      "id": "001",
+      "name": "C.H.A.D.-OS",
+      "inputs": [
+        "authenticated control commands",
+        "system telemetry",
+        "configuration profile"
+      ],
+      "outputs": [
+        "kernel state",
+        "dispatch workflow coordination",
+        "dashboard status"
+      ],
+      "apis": [
+        "/healthz",
+        "/v1/dashboard",
+        "/v1/telemetry",
+        "/v1/control/dispatch"
+      ],
+      "storage": [
+        "config/system_registry.json",
+        "data/audit/events.jsonl"
+      ],
+      "auth": "****** enforced by CONTROL_TOKEN",
+      "audit_trail": "All state-changing operations emit JSONL audit events.",
+      "health_checks": [
+        "service healthy",
+        "registry loaded",
+        "kernel state != SHUTDOWN"
+      ],
+      "deployment_model": "single-process Python service for local and staging bootstrap"
+    },
+    {
+      "id": "002",
+      "name": "Infinity911\u2122",
+      "inputs": [
+        "telemetry incidents",
+        "dispatch requests",
+        "routing metadata"
+      ],
+      "outputs": [
+        "dispatch recommendations",
+        "escalation flags"
+      ],
+      "apis": [
+        "/v1/telemetry",
+        "/v1/control/dispatch"
+      ],
+      "storage": [
+        "audit ledger events"
+      ],
+      "auth": "Inherited from control layer",
+      "audit_trail": "Dispatch creation is written to the audit ledger.",
+      "health_checks": [
+        "dispatch engine available"
+      ],
+      "deployment_model": "in-process service behind C.H.A.D.-OS control layer"
+    },
+    {
+      "id": "003",
+      "name": "AlgoTraj\u2122 Engine",
+      "inputs": [
+        "telemetry payload",
+        "severity",
+        "location vectors"
+      ],
+      "outputs": [
+        "response trajectory hints",
+        "route posture"
+      ],
+      "apis": [
+        "internal dispatch service contract"
+      ],
+      "storage": [
+        "in-memory recent event history"
+      ],
+      "auth": "Internal service access",
+      "audit_trail": "Trajectory assumptions are embedded in dispatch audit payloads.",
+      "health_checks": [
+        "reasoning pipeline initialized"
+      ],
+      "deployment_model": "module within the Phase 1 service process"
+    },
+    {
+      "id": "004",
+      "name": "ReRoute System",
+      "inputs": [
+        "dispatch plans",
+        "operator overrides"
+      ],
+      "outputs": [
+        "manual override recommendations",
+        "risk posture"
+      ],
+      "apis": [
+        "internal override contract"
+      ],
+      "storage": [
+        "audit ledger events"
+      ],
+      "auth": "Authenticated operator control path",
+      "audit_trail": "Override decisions are logged as control events.",
+      "health_checks": [
+        "manual override path reachable"
+      ],
+      "deployment_model": "future internal module attached to the control slice"
+    },
+    {
+      "id": "005",
+      "name": "Infinity777",
+      "inputs": [
+        "inter-service messages",
+        "telemetry forwarding rules"
+      ],
+      "outputs": [
+        "normalized network messages"
+      ],
+      "apis": [
+        "message bus contract"
+      ],
+      "storage": [
+        "ephemeral message subscriptions"
+      ],
+      "auth": "Service boundary token enforcement",
+      "audit_trail": "Published events are recorded indirectly through consumers.",
+      "health_checks": [
+        "message bus can publish and subscribe"
+      ],
+      "deployment_model": "in-process message bus for Phase 1"
+    },
+    {
+      "id": "009",
+      "name": "AE Command",
+      "inputs": [
+        "dashboard queries",
+        "dispatch summaries"
+      ],
+      "outputs": [
+        "operational status snapshot"
+      ],
+      "apis": [
+        "/v1/dashboard"
+      ],
+      "storage": [
+        "last dispatch snapshot",
+        "registry summaries"
+      ],
+      "auth": "Authenticated read access",
+      "audit_trail": "Dashboard reads are available for future audit expansion.",
+      "health_checks": [
+        "dashboard snapshot generation"
+      ],
+      "deployment_model": "JSON dashboard served by the Phase 1 API"
+    },
+    {
+      "id": "013",
+      "name": "Forensic Audit Ledger",
+      "inputs": [
+        "telemetry ingests",
+        "dispatch results",
+        "control commands"
+      ],
+      "outputs": [
+        "immutable-style JSONL records"
+      ],
+      "apis": [
+        "internal audit service"
+      ],
+      "storage": [
+        "data/audit/events.jsonl"
+      ],
+      "auth": "Only bootstrapped services may write directly",
+      "audit_trail": "This component is the audit trail source of record.",
+      "health_checks": [
+        "audit log path writable"
+      ],
+      "deployment_model": "local file-backed ledger for bootstrap environments"
+    },
+    {
+      "id": "017",
+      "name": "Multi-Hazard Telemetry Aggregator",
+      "inputs": [
+        "raw JSON telemetry events"
+      ],
+      "outputs": [
+        "normalized telemetry envelopes",
+        "source counts"
+      ],
+      "apis": [
+        "/v1/telemetry"
+      ],
+      "storage": [
+        "in-memory rolling event buffer"
+      ],
+      "auth": "Authenticated ingest endpoint",
+      "audit_trail": "Each ingest is recorded before dispatch evaluation.",
+      "health_checks": [
+        "ingest accepted",
+        "event count increments"
+      ],
+      "deployment_model": "in-process service with API exposure"
+    },
+    {
+      "id": "018",
+      "name": "Crisis Response Identity Registry",
+      "inputs": [
+        "authorization headers",
+        "configured control token"
+      ],
+      "outputs": [
+        "access granted/denied"
+      ],
+      "apis": [
+        "****** gate applied to protected endpoints"
+      ],
+      "storage": [
+        "configuration only"
+      ],
+      "auth": "CONTROL_TOKEN bearer authentication",
+      "audit_trail": "Denied access can be added to future audit policies.",
+      "health_checks": [
+        "token configured"
+      ],
+      "deployment_model": "in-process auth guard"
+    },
+    {
+      "id": "125",
+      "name": "Master Enterprise Architecture Controller",
+      "inputs": [
+        "registry metadata",
+        "core contracts",
+        "kernel status",
+        "dispatch outputs"
+      ],
+      "outputs": [
+        "governance snapshot",
+        "portfolio counts",
+        "system summaries"
+      ],
+      "apis": [
+        "/v1/dashboard",
+        "/v1/registry/core"
+      ],
+      "storage": [
+        "config/system_registry.json",
+        "config/core_system_contracts.json"
+      ],
+      "auth": "Inherited from control layer",
+      "audit_trail": "References the audit ledger for operational proof.",
+      "health_checks": [
+        "registry and contract documents load"
+      ],
+      "deployment_model": "portfolio orchestration metadata layer"
+    }
+  ]
+}

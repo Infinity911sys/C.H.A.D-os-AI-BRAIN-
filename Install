@@ -1,1 +1,5 @@
-python3 install_chad_os_v1.py
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+make -f build/Makefile test
+make -f build/Makefile serve
