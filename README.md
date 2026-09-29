@@ -11,6 +11,7 @@ This repository now contains a runnable Phase 1 foundation for the Austin Enterp
   - dispatch workflow generation
   - JSONL audit logging
   - dashboard and health endpoints
+- a website-ready public catalog and static landing page served from this repo
 - tests, build commands, Docker packaging, and CI
 
 ## Repository structure
@@ -20,6 +21,7 @@ This repository now contains a runnable Phase 1 foundation for the Austin Enterp
 - `/config/deployment_profiles.json` — local, staging, and production deployment settings
 - `/deployment` — container and Kubernetes deployment assets
 - `/build/Makefile` — lint, test, run, and serve commands
+- `/site` — website-facing catalog UI assets for direct publishing or embedding
 - `/tests` — automated test coverage for registry, bootstrap, and API behavior
 - `/Brain`, `/Index`, `/Java` — preserved legacy reference material and prototype artifacts
 
@@ -36,12 +38,23 @@ Default API address: `http://127.0.0.1:8080`
 
 Default control token: `dev-control-token`
 
+Website catalog: `http://127.0.0.1:8080/`
+
 ## API surface
+- `GET /` — public website landing page and catalog UI
+- `GET /v1/public/summary` — public portfolio summary for website consumption
+- `GET /v1/public/catalog` — public searchable/filterable 125-system catalog
+- `GET /v1/public/core` — public initial operating-core listing
 - `GET /healthz` — service health
 - `GET /v1/dashboard` — authenticated portfolio and runtime dashboard
 - `GET /v1/registry/core` — authenticated view of the core operating systems
 - `POST /v1/telemetry` — authenticated telemetry ingest that emits a dispatch workflow
 - `POST /v1/control/dispatch` — authenticated direct dispatch request
+
+Example public catalog request:
+```bash
+curl "http://127.0.0.1:8080/v1/public/catalog?section=platform_core&status=partially_defined"
+```
 
 Example telemetry request:
 ```bash
@@ -55,6 +68,7 @@ It provides the portfolio foundation requested in the plan:
 - core operating contracts
 - shared runtime, governance, telemetry, audit, and dashboard primitives
 - one runnable vertical slice that can be extended system-by-system
+- a website-ready catalog surface that can be published from this repo or integrated into a separate website repository
 
 ## Validation
 ```bash

@@ -45,9 +45,26 @@ def test_health_and_dashboard_endpoints(tmp_path):
     server, thread = start_server(tmp_path)
     base_url = f'http://127.0.0.1:{server.server_port}'
     try:
+        with request.urlopen(f'{base_url}/') as response:
+            homepage = response.read().decode('utf-8')
+        assert 'Master 125-System Catalog' in homepage
+
         with request.urlopen(f'{base_url}/healthz') as response:
             health = json.loads(response.read().decode('utf-8'))
         assert health['status'] == 'ok'
+
+        with request.urlopen(f'{base_url}/v1/public/summary') as response:
+            summary = json.loads(response.read().decode('utf-8'))
+        assert summary['summary']['system_count'] == 125
+
+        with request.urlopen(
+            f'{base_url}/v1/public/catalog?section=platform_core&status=partially_defined'
+        ) as response:
+            public_catalog = json.loads(response.read().decode('utf-8'))
+        assert public_catalog['count'] > 0
+        assert all(
+            item['section'] == 'platform_core' for item in public_catalog['systems']
+        )
 
         telemetry = api_request(
             f'{base_url}/v1/telemetry',

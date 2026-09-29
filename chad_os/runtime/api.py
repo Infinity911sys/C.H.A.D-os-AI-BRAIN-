@@ -4,8 +4,10 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
 import json
+from urllib.parse import urlparse
 
 from chad_os.runtime.bootstrap import ChadOSApplication
+from chad_os.runtime.site import resolve_site_asset
 
 
 class ApplicationServer(ThreadingHTTPServer):
@@ -35,23 +37,64 @@ class RequestHandler(BaseHTTPRequestHandler):
         return self.server.app.identity.authorize(headers)
 
     def _require_auth(self) -> bool:
-        if self.path == '/healthz':
+        parsed = urlparse(self.path)
+        if parsed.path in {
+            '/',
+            '/index.html',
+            '/site.css',
+            '/site.js',
+            '/healthz',
+            '/v1/public/summary',
+            '/v1/public/catalog',
+            '/v1/public/core',
+        }:
             return True
         if self._is_authorized():
             return True
         self._send_json(HTTPStatus.UNAUTHORIZED, {'error': 'unauthorized'})
         return False
 
+    def _send_bytes(self, status: int, body: bytes, content_type: str) -> None:
+        self.send_response(status)
+        self.send_header('Content-Type', content_type)
+        self.send_header('Content-Length', str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
     def do_GET(self) -> None:
         if not self._require_auth():
             return
-        if self.path == '/healthz':
+        parsed = urlparse(self.path)
+
+        asset = resolve_site_asset(parsed.path)
+        if asset is not None:
+            file_path, content_type = asset
+            self._send_bytes(HTTPStatus.OK, file_path.read_bytes(), content_type)
+            return
+
+        if parsed.path == '/healthz':
             self._send_json(HTTPStatus.OK, self.server.app.health())
             return
-        if self.path == '/v1/dashboard':
+        if parsed.path == '/v1/public/summary':
+            self._send_json(HTTPStatus.OK, self.server.app.registry.public_payload())
+            return
+        if parsed.path == '/v1/public/catalog':
+            filters = self.server.app.registry.filters_from_query(parsed.query)
+            self._send_json(
+                HTTPStatus.OK,
+                self.server.app.registry.public_catalog(**filters),
+            )
+            return
+        if parsed.path == '/v1/public/core':
+            self._send_json(
+                HTTPStatus.OK,
+                {'systems': self.server.app.registry.core_systems()},
+            )
+            return
+        if parsed.path == '/v1/dashboard':
             self._send_json(HTTPStatus.OK, self.server.app.dashboard.snapshot())
             return
-        if self.path == '/v1/registry/core':
+        if parsed.path == '/v1/registry/core':
             self._send_json(HTTPStatus.OK, {'systems': self.server.app.registry.core_systems()})
             return
         self._send_json(HTTPStatus.NOT_FOUND, {'error': 'not found'})
