@@ -13,6 +13,7 @@ This repository now contains a runnable Phase 1 foundation for the Austin Enterp
   - dashboard and health endpoints
 - a website-ready public catalog and static landing page served from this repo
 - a separate standalone website bundle that can be published independently
+- Algo-Traj-oriented standalone website styling that preserves the original vector/trajectory concepts and supports a future mobile release path
 - tests, build commands, Docker packaging, and CI
 
 ## Repository structure
@@ -49,6 +50,8 @@ make -f build/Makefile website-serve
 ```
 
 Standalone website address: `http://127.0.0.1:8090/`
+
+The standalone website is styled around the original Algo-Traj concept and includes a web-app manifest as a first step toward a future Android/Play Store packaging path.
 
 ## API surface
 - `GET /` — public website landing page and catalog UI
