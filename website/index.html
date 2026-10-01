@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Austin Enterprise LLC — Standalone System Website</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Austin Enterprise LLC</p>
+        <h1>Standalone 125-System Website</h1>
+        <p class="lede">
+          Separate publishable website bundle generated from the C.H.A.D.-OS portfolio registry.
+        </p>
+        <div class="hero-grid">
+          <div>
+            <div id="hero-stats" class="stats"></div>
+          </div>
+          <aside class="algo-traj-hero">
+            <p class="eyebrow">Algo-Traj Visual Direction</p>
+            <h2>Neon vector correction aesthetic</h2>
+            <p class="section-note">
+              Styled from the provided Algo-Traj reference art with holographic routing,
+              trajectory rings, spectrum gradients, and dark console surfaces.
+            </p>
+            <img
+              class="algo-traj-image"
+              src="https://github.com/user-attachments/assets/6d54da62-1f57-4a93-89ef-a3210a6d8076"
+              alt="Algo-Traj inspired neon vector correction interface"
+            />
+          </aside>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="panel algo-traj-panel">
+        <div class="algo-traj-copy">
+          <p class="eyebrow">Featured subsystem cluster</p>
+          <h2>Algo-Traj corridor</h2>
+          <p class="section-note">
+            A dedicated feature band for trajectory modeling, stabilization, vector routing,
+            and correction-focused systems.
+          </p>
+          <div class="pill-row">
+            <span class="pill">vector maps</span>
+            <span class="pill">route correction</span>
+            <span class="pill">trajectory stabilization</span>
+          </div>
+        </div>
+        <div id="algo-traj-systems" class="stack"></div>
+      </section>
+
+      <section class="panel">
+        <div class="filters">
+          <input id="search" type="search" placeholder="Search systems, sections, or purpose" />
+          <select id="section"></select>
+          <select id="status"></select>
+          <button id="reset-filters" type="button">Reset</button>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <h2>Operating Core</h2>
+          <div id="core-systems" class="stack"></div>
+        </article>
+
+        <article class="panel">
+          <h2>Section Summary</h2>
+          <div id="section-summary" class="stack"></div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="catalog-header">
+          <h2>System Catalog</h2>
+          <p id="catalog-count"></p>
+        </div>
+        <div id="catalog" class="catalog"></div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

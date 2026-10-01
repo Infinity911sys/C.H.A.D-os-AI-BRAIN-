@@ -12,6 +12,7 @@ This repository now contains a runnable Phase 1 foundation for the Austin Enterp
   - JSONL audit logging
   - dashboard and health endpoints
 - a website-ready public catalog and static landing page served from this repo
+- a separate standalone website bundle that can be published independently
 - tests, build commands, Docker packaging, and CI
 
 ## Repository structure
@@ -22,6 +23,7 @@ This repository now contains a runnable Phase 1 foundation for the Austin Enterp
 - `/deployment` — container and Kubernetes deployment assets
 - `/build/Makefile` — lint, test, run, and serve commands
 - `/site` — website-facing catalog UI assets for direct publishing or embedding
+- `/website` — standalone publishable website bundle with exported JSON data
 - `/tests` — automated test coverage for registry, bootstrap, and API behavior
 - `/Brain`, `/Index`, `/Java` — preserved legacy reference material and prototype artifacts
 
@@ -39,6 +41,14 @@ Default API address: `http://127.0.0.1:8080`
 Default control token: `dev-control-token`
 
 Website catalog: `http://127.0.0.1:8080/`
+
+Standalone website build:
+```bash
+make -f build/Makefile website-export
+make -f build/Makefile website-serve
+```
+
+Standalone website address: `http://127.0.0.1:8090/`
 
 ## API surface
 - `GET /` — public website landing page and catalog UI
@@ -69,6 +79,7 @@ It provides the portfolio foundation requested in the plan:
 - shared runtime, governance, telemetry, audit, and dashboard primitives
 - one runnable vertical slice that can be extended system-by-system
 - a website-ready catalog surface that can be published from this repo or integrated into a separate website repository
+- a standalone website bundle with pre-exported data for separate hosting
 
 ## Validation
 ```bash
