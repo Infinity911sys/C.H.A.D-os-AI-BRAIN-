@@ -3,6 +3,7 @@
 This repository now contains a runnable Phase 1 foundation for the Austin Enterprise 125-platform portfolio.
 
 Ownership context: the portfolio systems represented here belong to Austin Enterprise LLC in Phoenix, Arizona.
+Original concepts and architecture represented here are attributed to Chad Alan Austin of Austin Enterprise LLC.
 
 ## What is implemented
 - a machine-readable registry for all 125 indexed systems
@@ -54,6 +55,7 @@ make -f build/Makefile website-serve
 Standalone website address: `http://127.0.0.1:8090/`
 
 The standalone website is styled around the original Algo-Traj concept and includes a web-app manifest as a first step toward a future Android/Play Store packaging path.
+For ownership and publication notice language, see `/home/runner/work/C.H.A.D-os-AI-BRAIN-/C.H.A.D-os-AI-BRAIN-/NOTICE.md` and `/home/runner/work/C.H.A.D-os-AI-BRAIN-/C.H.A.D-os-AI-BRAIN-/website/legal.html`.
 
 ## API surface
 - `GET /` — public website landing page and catalog UI
