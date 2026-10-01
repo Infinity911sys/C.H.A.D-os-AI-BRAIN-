@@ -54,7 +54,7 @@ make -f build/Makefile website-serve
 
 Standalone website address: `http://127.0.0.1:8090/`
 
-The standalone website is styled around the original Algo-Traj concept and includes a web-app manifest as a first step toward a future Android/Play Store packaging path.
+The standalone website is now focused on Algo-Traj only for the current prompt/day context, styled around the original Algo-Traj concept, and includes a web-app manifest as a first step toward a future Android/Play Store packaging path.
 For ownership and publication notice language, see `/home/runner/work/C.H.A.D-os-AI-BRAIN-/C.H.A.D-os-AI-BRAIN-/NOTICE.md` and `/home/runner/work/C.H.A.D-os-AI-BRAIN-/C.H.A.D-os-AI-BRAIN-/website/legal.html`.
 
 ## API surface

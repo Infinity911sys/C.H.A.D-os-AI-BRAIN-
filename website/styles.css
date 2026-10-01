@@ -226,6 +226,10 @@ button {
     0 0 26px rgba(100, 194, 255, 0.18);
 }
 
+#prompt-cards .system-card h3 {
+  color: var(--accent-2);
+}
+
 .trajectory-card {
   position: relative;
   overflow: hidden;

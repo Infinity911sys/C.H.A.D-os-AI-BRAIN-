@@ -4,12 +4,32 @@ const coreSystems = document.getElementById('core-systems');
 const algoTrajSystems = document.getElementById('algo-traj-systems');
 const catalog = document.getElementById('catalog');
 const catalogCount = document.getElementById('catalog-count');
+const promptCards = document.getElementById('prompt-cards');
 const searchInput = document.getElementById('search');
 const sectionSelect = document.getElementById('section');
 const statusSelect = document.getElementById('status');
 const resetButton = document.getElementById('reset-filters');
 
 let allSystems = [];
+const ALGO_TRAJ_IDS = ['003', '023', '041', '051', '105'];
+const TODAY_PROMPTS = [
+  {
+    title: 'Trajectory correction map',
+    body: 'Map a behavioral-trajectory correction flow for a route that has unstable deviations and define the stabilization loop.',
+  },
+  {
+    title: 'Vector anomaly review',
+    body: 'Analyze a spatial vector stream, identify deviation clusters, and rank which pathway corrections should happen first.',
+  },
+  {
+    title: 'Stabilized route architecture',
+    body: 'Design an enterprise-grade Algo-Traj architecture for corrected pathways, optimization loops, and audit visibility.',
+  },
+  {
+    title: 'Mobile operator view',
+    body: 'Define the Play-Store-ready mobile experience for Algo-Traj operators who need trajectory alerts, correction states, and vector maps.',
+  },
+];
 
 async function getJson(path) {
   const response = await fetch(path);
@@ -37,6 +57,22 @@ function renderHero(summary) {
       `,
     )
     .join('');
+}
+
+function renderPrompts() {
+  promptCards.innerHTML = TODAY_PROMPTS.map(
+    (prompt) => `
+      <article class="system-card trajectory-card">
+        <h3>${prompt.title}</h3>
+        <p>${prompt.body}</p>
+        <div class="pill-row">
+          <span class="pill">Algo-Traj</span>
+          <span class="pill">today</span>
+          <span class="pill">enterprise prompt</span>
+        </div>
+      </article>
+    `,
+  ).join('');
 }
 
 function renderSections(sections) {
@@ -113,14 +149,27 @@ function renderCatalog(systems) {
 function populateFilters(summary, catalogData) {
   const sectionOptions = [
     '<option value="">All sections</option>',
-    ...summary.sections.map(
+    ...summary.sections
+      .filter((section) =>
+        catalogData.systems.some(
+          (system) =>
+            ALGO_TRAJ_IDS.includes(system.id) && system.section === section.section,
+        ),
+      )
+      .map(
       (section) =>
         `<option value="${section.section}">${section.section_name}</option>`,
-    ),
+      ),
   ];
   sectionSelect.innerHTML = sectionOptions.join('');
 
-  const statuses = [...new Set(catalogData.systems.map((system) => system.operational_status))];
+  const statuses = [
+    ...new Set(
+      catalogData.systems
+        .filter((system) => ALGO_TRAJ_IDS.includes(system.id))
+        .map((system) => system.operational_status),
+    ),
+  ];
   statusSelect.innerHTML = [
     '<option value="">All statuses</option>',
     ...statuses.map((status) => `<option value="${status}">${status}</option>`),
@@ -133,6 +182,7 @@ function applyFilters() {
   const status = statusSelect.value;
 
   const filtered = allSystems.filter((system) => {
+    if (!ALGO_TRAJ_IDS.includes(system.id)) return false;
     if (section && system.section !== section) return false;
     if (status && system.operational_status !== status) return false;
     if (!search) return true;
@@ -160,9 +210,10 @@ async function boot() {
   renderCore(core.systems);
   renderAlgoTrajSystems(
     allSystems.filter((system) =>
-      ['003', '023', '041', '051', '105'].includes(system.id),
+      ALGO_TRAJ_IDS.includes(system.id),
     ),
   );
+  renderPrompts();
   populateFilters(summary, catalogData);
   applyFilters();
 }
