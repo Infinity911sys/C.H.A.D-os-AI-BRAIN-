@@ -2,6 +2,8 @@
 
 This repository now contains a runnable Phase 1 foundation for the Austin Enterprise 125-platform portfolio.
 
+Ownership context: the portfolio systems represented here belong to Austin Enterprise LLC in Phoenix, Arizona.
+
 ## What is implemented
 - a machine-readable registry for all 125 indexed systems
 - core system contracts for the initial operating core

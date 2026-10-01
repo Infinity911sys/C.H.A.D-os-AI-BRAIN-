@@ -1,7 +1,7 @@
 {
   "name": "Austin Enterprise Algo-Traj",
   "short_name": "Algo-Traj",
-  "description": "Standalone enterprise website for Algo-Traj and the Austin Enterprise 125-system portfolio.",
+  "description": "Standalone enterprise website for Austin Enterprise LLC systems in Phoenix, Arizona, including Algo-Traj and the 125-system portfolio.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#060816",
