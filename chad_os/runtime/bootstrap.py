@@ -15,6 +15,7 @@ from chad_os.modules.brain.memory import MemoryModule
 from chad_os.modules.brain.reasoning import ReasoningModule
 from chad_os.modules.io.message_bus import MessageBus
 from chad_os.services.audit import AuditLedger
+from chad_os.services.algotraj import AlgoTrajService
 from chad_os.services.dashboard import DashboardService
 from chad_os.services.dispatch import DispatchCoordinator
 from chad_os.services.identity import IdentityRegistry
@@ -80,6 +81,7 @@ class ChadOSApplication:
         self.reasoning = ReasoningModule(self.memory, self.integrity)
         self.telemetry = TelemetryAggregator()
         self.dispatch = DispatchCoordinator()
+        self.algotraj = AlgoTrajService()
         self.license_status = self.license_verifier.status()
         self.dashboard = DashboardService(
             registry=self.registry,
@@ -142,3 +144,11 @@ class ChadOSApplication:
         self.audit.record('control.dispatch.requested', normalized)
         self.audit.record('dispatch.created', dispatch)
         return dispatch
+
+    def analyze_algotraj(self, payload: dict[str, Any]) -> dict[str, Any]:
+        result = self.algotraj.analyze(payload)
+        self.audit.record('algotraj.analysis', result)
+        return result
+
+    def algotraj_dashboard(self) -> dict[str, Any]:
+        return self.algotraj.operator_dashboard()

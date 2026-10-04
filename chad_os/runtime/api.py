@@ -44,6 +44,8 @@ class RequestHandler(BaseHTTPRequestHandler):
             '/site.css',
             '/site.js',
             '/healthz',
+            '/v1/algotraj/summary',
+            '/v1/algotraj/play-store',
             '/v1/public/summary',
             '/v1/public/catalog',
             '/v1/public/core',
@@ -75,6 +77,15 @@ class RequestHandler(BaseHTTPRequestHandler):
         if parsed.path == '/healthz':
             self._send_json(HTTPStatus.OK, self.server.app.health())
             return
+        if parsed.path == '/v1/algotraj/summary':
+            self._send_json(HTTPStatus.OK, self.server.app.algotraj.summary())
+            return
+        if parsed.path == '/v1/algotraj/play-store':
+            self._send_json(
+                HTTPStatus.OK,
+                self.server.app.algotraj.play_store_readiness(),
+            )
+            return
         if parsed.path == '/v1/public/summary':
             self._send_json(HTTPStatus.OK, self.server.app.registry.public_payload())
             return
@@ -94,6 +105,9 @@ class RequestHandler(BaseHTTPRequestHandler):
         if parsed.path == '/v1/dashboard':
             self._send_json(HTTPStatus.OK, self.server.app.dashboard.snapshot())
             return
+        if parsed.path == '/v1/algotraj/operator/dashboard':
+            self._send_json(HTTPStatus.OK, self.server.app.algotraj_dashboard())
+            return
         if parsed.path == '/v1/registry/core':
             self._send_json(HTTPStatus.OK, {'systems': self.server.app.registry.core_systems()})
             return
@@ -108,6 +122,9 @@ class RequestHandler(BaseHTTPRequestHandler):
             return
         if self.path == '/v1/control/dispatch':
             self._send_json(HTTPStatus.OK, self.server.app.dispatch_incident(body))
+            return
+        if self.path == '/v1/algotraj/analyze':
+            self._send_json(HTTPStatus.OK, self.server.app.analyze_algotraj(body))
             return
         self._send_json(HTTPStatus.NOT_FOUND, {'error': 'not found'})
 

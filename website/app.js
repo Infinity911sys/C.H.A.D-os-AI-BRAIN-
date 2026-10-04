@@ -12,24 +12,6 @@ const resetButton = document.getElementById('reset-filters');
 
 let allSystems = [];
 const ALGO_TRAJ_IDS = ['003', '023', '041', '051', '105'];
-const TODAY_PROMPTS = [
-  {
-    title: 'Trajectory correction map',
-    body: 'Map a behavioral-trajectory correction flow for a route that has unstable deviations and define the stabilization loop.',
-  },
-  {
-    title: 'Vector anomaly review',
-    body: 'Analyze a spatial vector stream, identify deviation clusters, and rank which pathway corrections should happen first.',
-  },
-  {
-    title: 'Stabilized route architecture',
-    body: 'Design an enterprise-grade Algo-Traj architecture for corrected pathways, optimization loops, and audit visibility.',
-  },
-  {
-    title: 'Mobile operator view',
-    body: 'Define the Play-Store-ready mobile experience for Algo-Traj operators who need trajectory alerts, correction states, and vector maps.',
-  },
-];
 
 async function getJson(path) {
   const response = await fetch(path);
@@ -59,8 +41,8 @@ function renderHero(summary) {
     .join('');
 }
 
-function renderPrompts() {
-  promptCards.innerHTML = TODAY_PROMPTS.map(
+function renderPrompts(prompts) {
+  promptCards.innerHTML = prompts.map(
     (prompt) => `
       <article class="system-card trajectory-card">
         <h3>${prompt.title}</h3>
@@ -198,10 +180,11 @@ function applyFilters() {
 }
 
 async function boot() {
-  const [summary, catalogData, core] = await Promise.all([
+  const [summary, catalogData, core, algotraj] = await Promise.all([
     getJson('./data/summary.json'),
     getJson('./data/catalog.json'),
     getJson('./data/core.json'),
+    getJson('./data/algotraj.json'),
   ]);
 
   allSystems = catalogData.systems;
@@ -213,7 +196,7 @@ async function boot() {
       ALGO_TRAJ_IDS.includes(system.id),
     ),
   );
-  renderPrompts();
+  renderPrompts(algotraj.today_prompts);
   populateFilters(summary, catalogData);
   applyFilters();
 }

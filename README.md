@@ -1,6 +1,6 @@
 # C.H.A.D.-OS Phase 1 Foundation
 
-This repository now contains a runnable Phase 1 foundation for the Austin Enterprise 125-platform portfolio.
+This repository now contains a runnable Phase 1 foundation for the Austin Enterprise 125-platform portfolio, with Algo-Traj positioned as the first completed product surface.
 
 Ownership context: the portfolio systems represented here belong to Austin Enterprise LLC in Phoenix, Arizona.
 Original concepts and architecture represented here are attributed to Chad Alan Austin of Austin Enterprise LLC.
@@ -17,6 +17,8 @@ Original concepts and architecture represented here are attributed to Chad Alan 
 - a website-ready public catalog and static landing page served from this repo
 - a separate standalone website bundle that can be published independently
 - Algo-Traj-oriented standalone website styling that preserves the original vector/trajectory concepts and supports a future mobile release path
+- a dedicated Algo-Traj analysis service with operator-facing API endpoints and Play Store release scaffolding
+- documented Algo-Traj support for authorized inbound device monitoring beyond only its own UI flows
 - tests, build commands, Docker packaging, and CI
 
 ## Repository structure
@@ -28,6 +30,8 @@ Original concepts and architecture represented here are attributed to Chad Alan 
 - `/build/Makefile` — lint, test, run, and serve commands
 - `/site` — website-facing catalog UI assets for direct publishing or embedding
 - `/website` — standalone publishable website bundle with exported JSON data
+- `/docs/algotraj.md` — Algo-Traj product definition and operating scope
+- `/docs/algotraj_play_store.md` — mobile and Play Store release scaffolding notes
 - `/tests` — automated test coverage for registry, bootstrap, and API behavior
 - `/Brain`, `/Index`, `/Java` — preserved legacy reference material and prototype artifacts
 
@@ -63,10 +67,14 @@ For ownership and publication notice language, see `/home/runner/work/C.H.A.D-os
 - `GET /v1/public/catalog` — public searchable/filterable 125-system catalog
 - `GET /v1/public/core` — public initial operating-core listing
 - `GET /healthz` — service health
+- `GET /v1/algotraj/summary` — public Algo-Traj product summary
+- `GET /v1/algotraj/play-store` — public Play Store readiness scaffold metadata
 - `GET /v1/dashboard` — authenticated portfolio and runtime dashboard
+- `GET /v1/algotraj/operator/dashboard` — authenticated Algo-Traj operator dashboard
 - `GET /v1/registry/core` — authenticated view of the core operating systems
 - `POST /v1/telemetry` — authenticated telemetry ingest that emits a dispatch workflow
 - `POST /v1/control/dispatch` — authenticated direct dispatch request
+- `POST /v1/algotraj/analyze` — authenticated Algo-Traj scenario analysis and correction recommendation
 
 Example public catalog request:
 ```bash
@@ -87,6 +95,8 @@ It provides the portfolio foundation requested in the plan:
 - one runnable vertical slice that can be extended system-by-system
 - a website-ready catalog surface that can be published from this repo or integrated into a separate website repository
 - a standalone website bundle with pre-exported data for separate hosting
+
+Algo-Traj is now the first product-focused implementation target in this repository, but final production deployment, mobile signing, and Play Store submission steps still require environment-specific release work outside this repository.
 
 ## Validation
 ```bash

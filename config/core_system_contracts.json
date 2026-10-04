@@ -71,21 +71,28 @@
         "location vectors"
       ],
       "outputs": [
-        "response trajectory hints",
-        "route posture"
+        "trajectory analysis",
+        "correction recommendations",
+        "stabilization score",
+        "operator dashboard data"
       ],
       "apis": [
-        "internal dispatch service contract"
+        "/v1/algotraj/summary",
+        "/v1/algotraj/analyze",
+        "/v1/algotraj/operator/dashboard",
+        "/v1/algotraj/play-store"
       ],
       "storage": [
-        "in-memory recent event history"
+        "data/audit/events.jsonl",
+        "website/data/algotraj.json"
       ],
       "auth": "Internal service access",
       "audit_trail": "Trajectory assumptions are embedded in dispatch audit payloads.",
       "health_checks": [
-        "reasoning pipeline initialized"
+        "analysis pipeline initialized",
+        "play store scaffold metadata available"
       ],
-      "deployment_model": "module within the Phase 1 service process"
+      "deployment_model": "python service with standalone website bundle and Android release scaffolding"
     },
     {
       "id": "004",

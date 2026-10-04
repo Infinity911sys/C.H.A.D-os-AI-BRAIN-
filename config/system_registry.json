@@ -76,11 +76,11 @@
         "108",
         "125"
       ],
-      "runtime": "python_service",
+      "runtime": "python_service_with_web_bundle",
       "repo": "Infinity911sys/C.H.A.D-os-AI-BRAIN-",
-      "deployment_target": "local_staging_then_cloud",
+      "deployment_target": "standalone_web_then_android_release",
       "security_class": "critical",
-      "operational_status": "partially_defined"
+      "operational_status": "already_exists"
     },
     {
       "id": "004",
@@ -1014,7 +1014,7 @@
       "repo": "Infinity911sys/C.H.A.D-os-AI-BRAIN-",
       "deployment_target": "local_staging_then_cloud",
       "security_class": "standard",
-      "operational_status": "net_new_build"
+      "operational_status": "partially_defined"
     },
     {
       "id": "052",
