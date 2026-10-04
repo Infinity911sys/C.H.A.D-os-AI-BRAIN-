@@ -15,9 +15,9 @@
   "summary": {
     "system_count": 125,
     "by_status": {
-      "already_exists": 18,
+      "already_exists": 19,
       "partially_defined": 55,
-      "net_new_build": 24,
+      "net_new_build": 23,
       "external_dependency": 28
     },
     "by_asset_class": {
@@ -92,11 +92,11 @@
           "108",
           "125"
         ],
-        "runtime": "python_service",
+        "runtime": "python_service_with_web_bundle",
         "repo": "Infinity911sys/C.H.A.D-os-AI-BRAIN-",
-        "deployment_target": "local_staging_then_cloud",
+        "deployment_target": "standalone_web_then_android_release",
         "security_class": "critical",
-        "operational_status": "partially_defined"
+        "operational_status": "already_exists"
       },
       {
         "id": "004",
@@ -354,11 +354,11 @@
         "108",
         "125"
       ],
-      "runtime": "python_service",
+      "runtime": "python_service_with_web_bundle",
       "repo": "Infinity911sys/C.H.A.D-os-AI-BRAIN-",
-      "deployment_target": "local_staging_then_cloud",
+      "deployment_target": "standalone_web_then_android_release",
       "security_class": "critical",
-      "operational_status": "partially_defined"
+      "operational_status": "already_exists"
     },
     {
       "id": "004",

@@ -9,7 +9,10 @@ def test_standalone_website_export_creates_data_files(tmp_path):
     summary = json.loads((tmp_path / 'data' / 'summary.json').read_text(encoding='utf-8'))
     catalog = json.loads((tmp_path / 'data' / 'catalog.json').read_text(encoding='utf-8'))
     core = json.loads((tmp_path / 'data' / 'core.json').read_text(encoding='utf-8'))
+    algotraj = json.loads((tmp_path / 'data' / 'algotraj.json').read_text(encoding='utf-8'))
 
     assert summary['summary']['system_count'] == 125
     assert catalog['count'] == 125
     assert core['systems']
+    assert algotraj['summary']['product'] == 'Algo-Traj'
+    assert algotraj['today_prompts']

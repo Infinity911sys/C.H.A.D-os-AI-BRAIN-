@@ -57,6 +57,11 @@ def test_health_and_dashboard_endpoints(tmp_path):
             summary = json.loads(response.read().decode('utf-8'))
         assert summary['summary']['system_count'] == 125
 
+        with request.urlopen(f'{base_url}/v1/algotraj/summary') as response:
+            algotraj_summary = json.loads(response.read().decode('utf-8'))
+        assert algotraj_summary['product'] == 'Algo-Traj'
+        assert algotraj_summary['monitoring_scope']['mode'] == 'authorized-device-ingress'
+
         with request.urlopen(
             f'{base_url}/v1/public/catalog?section=platform_core&status=partially_defined'
         ) as response:
@@ -73,9 +78,30 @@ def test_health_and_dashboard_endpoints(tmp_path):
         )
         assert telemetry['dispatch']['priority'] == 'critical'
 
-        dashboard = api_request(f'{base_url}/v1/dashboard', 'secret-token')
-        assert dashboard['telemetry']['total_events'] == 1
-        assert dashboard['last_dispatch']['route'] == 'Infinity911'
+        analysis = api_request(
+            f'{base_url}/v1/algotraj/analyze',
+            'secret-token',
+            {
+                'route_name': 'phoenix-core',
+                'severity': 4,
+                'route_pressure': 0.7,
+                'vector_confidence': 0.81,
+                'deviation_count': 3,
+            },
+        )
+        assert analysis['product'] == 'Algo-Traj'
+        assert analysis['monitoring_scope']['mode'] == 'authorized-device-ingress'
+
+        dashboard = api_request(
+            f'{base_url}/v1/algotraj/operator/dashboard',
+            'secret-token',
+        )
+        assert dashboard['status'] == 'operational'
+        assert dashboard['total_analyses'] >= 1
+
+        portfolio_dashboard = api_request(f'{base_url}/v1/dashboard', 'secret-token')
+        assert portfolio_dashboard['telemetry']['total_events'] == 1
+        assert portfolio_dashboard['last_dispatch']['route'] == 'Infinity911'
     finally:
         server.shutdown()
         thread.join(timeout=2)

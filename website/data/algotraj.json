@@ -1,0 +1,64 @@
+{
+  "summary": {
+    "product": "Algo-Traj",
+    "tagline": "Behavioral-trajectory modeling and spatial vector analytics",
+    "status": "operational",
+    "capabilities": [
+      "behavioral-trajectory modeling",
+      "spatial vector analytics",
+      "correction loops",
+      "route stabilization",
+      "operator dashboard",
+      "authorized inbound device monitoring"
+    ],
+    "monitoring_scope": {
+      "mode": "authorized-device-ingress",
+      "coverage": [
+        "notifications",
+        "messages",
+        "network events",
+        "sensor events",
+        "operator-submitted scenario feeds"
+      ],
+      "constraint": "Requires explicit device permissions, enterprise policy approval, and lawful deployment configuration."
+    },
+    "play_store_readiness": {
+      "installable_web_app": true,
+      "android_release_path": [
+        "expo-shell-or-wrapper",
+        "android-build-signing",
+        "privacy-policy-hosting",
+        "play-console-listing-assets"
+      ],
+      "status": "scaffolded"
+    }
+  },
+  "play_store": {
+    "installable_web_app": true,
+    "android_release_path": [
+      "expo-shell-or-wrapper",
+      "android-build-signing",
+      "privacy-policy-hosting",
+      "play-console-listing-assets"
+    ],
+    "status": "scaffolded"
+  },
+  "today_prompts": [
+    {
+      "title": "Trajectory correction map",
+      "body": "Map a behavioral-trajectory correction flow for a route that has unstable deviations and define the stabilization loop."
+    },
+    {
+      "title": "Vector anomaly review",
+      "body": "Analyze a spatial vector stream, identify deviation clusters, and rank which pathway corrections should happen first."
+    },
+    {
+      "title": "Stabilized route architecture",
+      "body": "Design an enterprise-grade Algo-Traj architecture for corrected pathways, optimization loops, and audit visibility."
+    },
+    {
+      "title": "Mobile operator view",
+      "body": "Define the Play-Store-ready mobile experience for Algo-Traj operators who need trajectory alerts, correction states, and vector maps."
+    }
+  ]
+}
