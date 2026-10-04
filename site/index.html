@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Austin Enterprise LLC — 125-System Catalog</title>
+    <link rel="stylesheet" href="/site.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Austin Enterprise LLC</p>
+        <h1>Master 125-System Catalog</h1>
+        <p class="lede">
+          Public website view for the C.H.A.D.-OS Phase 1 portfolio registry.
+        </p>
+        <div id="hero-stats" class="stats"></div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="panel">
+        <div class="filters">
+          <input id="search" type="search" placeholder="Search systems, sections, or purpose" />
+          <select id="section"></select>
+          <select id="status"></select>
+          <button id="reset-filters" type="button">Reset</button>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <h2>Operating Core</h2>
+          <div id="core-systems" class="stack"></div>
+        </article>
+
+        <article class="panel">
+          <h2>Section Summary</h2>
+          <div id="section-summary" class="stack"></div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="catalog-header">
+          <h2>System Catalog</h2>
+          <p id="catalog-count"></p>
+        </div>
+        <div id="catalog" class="catalog"></div>
+      </section>
+    </main>
+
+    <script src="/site.js"></script>
+  </body>
+</html>

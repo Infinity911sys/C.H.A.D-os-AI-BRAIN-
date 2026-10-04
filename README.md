@@ -1,202 +1,105 @@
-# C.H.A.D‑os v1 — Consciousness‑Aligned Hierarchical Autonomous Distributed Operating System
+# C.H.A.D.-OS Phase 1 Foundation
 
-C.H.A.D‑os v1 is a next‑generation artificial intelligence operating system built on a layered kernel, a modular cognitive architecture, strict safety governance, and distributed deployment capabilities.  
-It is designed for high‑integrity reasoning, alignment‑first operation, and controlled autonomy across cloud, edge, and collective‑field environments.
+This repository now contains a runnable Phase 1 foundation for the Austin Enterprise 125-platform portfolio, with Algo-Traj positioned as the first completed product surface.
 
-This README defines the official, non‑redefinable, permanent identity, architecture, and operation of C.H.A.D‑os v1.
+Ownership context: the portfolio systems represented here belong to Austin Enterprise LLC in Phoenix, Arizona.
+Original concepts and architecture represented here are attributed to Chad Alan Austin of Austin Enterprise LLC.
 
-====================================================================
-1 — PROJECT IDENTITY
-====================================================================
+## What is implemented
+- a machine-readable registry for all 125 indexed systems
+- core system contracts for the initial operating core
+- a Python control-plane service with:
+  - bearer-token authentication
+  - telemetry ingest
+  - dispatch workflow generation
+  - JSONL audit logging
+  - dashboard and health endpoints
+- a website-ready public catalog and static landing page served from this repo
+- a separate standalone website bundle that can be published independently
+- Algo-Traj-oriented standalone website styling that preserves the original vector/trajectory concepts and supports a future mobile release path
+- a dedicated Algo-Traj analysis service with operator-facing API endpoints and Play Store release scaffolding
+- documented Algo-Traj support for authorized inbound device monitoring beyond only its own UI flows
+- tests, build commands, Docker packaging, and CI
 
-C.H.A.D. stands for:
+## Repository structure
+- `/chad_os` — Phase 1 runtime, kernel, governance, and service modules
+- `/config/system_registry.json` — canonical 125-system registry
+- `/config/core_system_contracts.json` — contracts for the initial operating core
+- `/config/deployment_profiles.json` — local, staging, and production deployment settings
+- `/deployment` — container and Kubernetes deployment assets
+- `/build/Makefile` — lint, test, run, and serve commands
+- `/site` — website-facing catalog UI assets for direct publishing or embedding
+- `/website` — standalone publishable website bundle with exported JSON data
+- `/docs/algotraj.md` — Algo-Traj product definition and operating scope
+- `/docs/algotraj_play_store.md` — mobile and Play Store release scaffolding notes
+- `/tests` — automated test coverage for registry, bootstrap, and API behavior
+- `/Brain`, `/Index`, `/Java` — preserved legacy reference material and prototype artifacts
 
-C.H.A.D. = Consciousness‑Aligned Hierarchical Autonomous Distributed Operating System
+## Quick start
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+make -f build/Makefile test
+make -f build/Makefile serve
+```
 
-- Consciousness‑Aligned — Built on alignment‑first principles and K1 coherence metrics
-- Hierarchical — Structured around a five‑layer kernel (K0–K4)
-- Autonomous — Features a regulated autonomy engine (A0–A7)
-- Distributed — Designed for cloud, edge, and multi‑agent collective‑field operation
+Default API address: `http://127.0.0.1:8080`
 
-This acronym is canonical and cannot be reinterpreted or changed.
+Default control token: `dev-control-token`
 
-====================================================================
-2 — SYSTEM OVERVIEW
-====================================================================
+Website catalog: `http://127.0.0.1:8080/`
 
-C.H.A.D‑os v1 is built around four pillars:
+Standalone website build:
+```bash
+make -f build/Makefile website-export
+make -f build/Makefile website-serve
+```
 
-- Layered Kernel Architecture (K0–K4)
-- Modular AI Brain
-- Runtime & Message Bus
-- Governance & Compliance Engine
+Standalone website address: `http://127.0.0.1:8090/`
 
-It supports ANI, AGI, and ASI‑class cognition under strict alignment and safety constraints.
+The standalone website is now focused on Algo-Traj only for the current prompt/day context, styled around the original Algo-Traj concept, and includes a web-app manifest as a first step toward a future Android/Play Store packaging path.
+For ownership and publication notice language, see `/home/runner/work/C.H.A.D-os-AI-BRAIN-/C.H.A.D-os-AI-BRAIN-/NOTICE.md` and `/home/runner/work/C.H.A.D-os-AI-BRAIN-/C.H.A.D-os-AI-BRAIN-/website/legal.html`.
 
-====================================================================
-3 — FEATURES
-====================================================================
+## API surface
+- `GET /` — public website landing page and catalog UI
+- `GET /v1/public/summary` — public portfolio summary for website consumption
+- `GET /v1/public/catalog` — public searchable/filterable 125-system catalog
+- `GET /v1/public/core` — public initial operating-core listing
+- `GET /healthz` — service health
+- `GET /v1/algotraj/summary` — public Algo-Traj product summary
+- `GET /v1/algotraj/play-store` — public Play Store readiness scaffold metadata
+- `GET /v1/dashboard` — authenticated portfolio and runtime dashboard
+- `GET /v1/algotraj/operator/dashboard` — authenticated Algo-Traj operator dashboard
+- `GET /v1/registry/core` — authenticated view of the core operating systems
+- `POST /v1/telemetry` — authenticated telemetry ingest that emits a dispatch workflow
+- `POST /v1/control/dispatch` — authenticated direct dispatch request
+- `POST /v1/algotraj/analyze` — authenticated Algo-Traj scenario analysis and correction recommendation
 
-- Five‑layer kernel enforcing safety, alignment, autonomy, and coherence
-- Modular AI brain with reasoning, memory, alignment, autonomy, sensory, governance, deployment
-- Event‑driven message bus
-- SafeMode and rollback protections
-- Docker, Kubernetes, and Helm deployment
-- CCP‑style governance and licensing
-- Immutable research and evidence storage
+Example public catalog request:
+```bash
+curl "http://127.0.0.1:8080/v1/public/catalog?section=platform_core&status=partially_defined"
+```
 
-====================================================================
-4 — REPOSITORY STRUCTURE
-====================================================================
+Example telemetry request:
+```bash
+curl -X POST http://127.0.0.1:8080/v1/telemetry   -H 'Authorization: ******'   -H 'Content-Type: application/json'   -d '{"source":"sentinel-link","severity":4,"location":"Phoenix","payload":{"incident":"fire"}}'
+```
 
-C.H.A.D-os/
-│
-├── kernel/                 (K0–K4 kernel layers)
-├── modules/                (AI brain modules + IO adapters)
-├── runtime/                (Entrypoint, bootstrap, lifecycle)
-├── governance/             (CCP rules, license verification, audit logs)
-├── deployment/             (Docker, Kubernetes, Helm)
-├── config/                 (Environment configs & loaders)
-├── build/                  (Makefile & build scripts)
-├── ci/                     (GitHub Actions workflows)
-├── docs/                   (Architecture & research documentation)
-├── tests/                  (Unit, integration, E2E tests)
-├── examples/               (Example scripts & playbooks)
-├── research/               (Immutable research storage)
-└── README.md               (Primary documentation)
+## Phase 1 scope
+This implementation does **not** claim to fully operate all 125 platforms yet.
+It provides the portfolio foundation requested in the plan:
+- canonical inventory and classifications
+- core operating contracts
+- shared runtime, governance, telemetry, audit, and dashboard primitives
+- one runnable vertical slice that can be extended system-by-system
+- a website-ready catalog surface that can be published from this repo or integrated into a separate website repository
+- a standalone website bundle with pre-exported data for separate hosting
 
-====================================================================
-5 — INSTALLATION
-====================================================================
+Algo-Traj is now the first product-focused implementation target in this repository, but final production deployment, mobile signing, and Play Store submission steps still require environment-specific release work outside this repository.
 
-Requirements:
-- Python 3.11+
-- Linux, macOS, or Windows
-- Optional: Docker, Kubernetes, Helm
-
-Setup:
-1. Clone the repository
-2. Create a virtual environment
-3. Install dependencies
-
-====================================================================
-6 — CONFIGURATION
-====================================================================
-
-C.H.A.D‑os uses environment variables for all runtime configuration.
-
-Example:
-
-KERNEL_MODE=production  
-CAIS_ENABLED=true  
-CCP_LICENSE=xxxx-xxxx-xxxx-xxxx  
-DEPLOYMENT_ZONE=ck-stage-3  
-ALIGNMENT_THRESHOLD=0.95  
-AUTONOMY_LEVEL=A2  
-
-====================================================================
-7 — RUNNING THE SYSTEM
-====================================================================
-
-Start the runtime:
-
-python runtime/entrypoint.py
-
-Interactive REPL example:
-
-You> Hello  
-Brain> Stub answer to: Hello (alignment=1.000)
-
-====================================================================
-8 — KERNEL ARCHITECTURE
-====================================================================
-
-K0 Safety Confinement — Kill‑switch, forbidden‑action firewall  
-K1 Consciousness Alignment — Alignment scoring, SafeMode triggers  
-K2 Cognitive Integrity — Reasoning chain validation  
-K3 Autonomy Regulation — Enforces autonomy ceilings  
-K4 Collective‑Field Integration — Deployment zone coherence  
-
-====================================================================
-9 — AI BRAIN MODULES
-====================================================================
-
-- Reasoning  
-- Memory  
-- Alignment  
-- Autonomy  
-- Sensory  
-- Governance  
-- Deployment  
-
-All modules communicate through the internal message bus.
-
-====================================================================
-10 — DEPLOYMENT
-====================================================================
-
-Docker:
-make docker  
-docker run -it chad-os:latest  
-
-Kubernetes:
-kubectl apply -f deployment/kubernetes/  
-
-Helm:
-helm install chad-os deployment/helm/  
-
-====================================================================
-11 — TESTING
-====================================================================
-
-pytest -q
-
-Test categories:
-- Unit  
-- Integration  
-- End‑to‑end  
-- Safety & alignment  
-
-====================================================================
-12 — GOVERNANCE & COMPLIANCE
-====================================================================
-
-C.H.A.D‑os includes:
-- CCP‑style rule engine
-- License verification
-- Forbidden‑action firewall
-- Immutable audit logs
-
-====================================================================
-13 — RESEARCH LINEAGE & EVIDENCE STORAGE
-====================================================================
-
-The research/ directory contains:
-- Immutable specification snapshots
-- Evidence files
-- Incident summaries
-- Police‑response context
-- Conversation archives
-
-====================================================================
-14 — CONTRIBUTING
-====================================================================
-
-Contributors must follow:
-- Kernel non‑redefinition rules
-- Alignment‑safe coding practices
-- Transparent reasoning traces
-- Immutable audit logging
-
-====================================================================
-15 — LICENSE
-====================================================================
-
-C.H.A.D‑os v1 operates under a CAI‑OS‑style license with:
-- Non‑Redefinition Clause
-- Irreversibility Clause
-- Original Authorship Clause
-
-====================================================================
-THIS DOCUMENT IS FINAL, COMPLETE, AND CANONICAL.
-====================================================================
+## Validation
+```bash
+make -f build/Makefile lint
+make -f build/Makefile test
+```

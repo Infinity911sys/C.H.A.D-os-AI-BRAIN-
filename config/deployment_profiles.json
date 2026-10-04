@@ -1,0 +1,20 @@
+{
+  "local": {
+    "host": "127.0.0.1",
+    "port": 8080,
+    "audit_log_path": "data/audit/events.jsonl",
+    "deployment_target": "developer workstation"
+  },
+  "staging": {
+    "host": "0.0.0.0",
+    "port": 8080,
+    "audit_log_path": "/var/log/chad-os/events.jsonl",
+    "deployment_target": "containerized staging environment"
+  },
+  "production": {
+    "host": "0.0.0.0",
+    "port": 8080,
+    "audit_log_path": "/var/log/chad-os/events.jsonl",
+    "deployment_target": "hardened cloud or edge node"
+  }
+}
